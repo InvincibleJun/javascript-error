@@ -20,7 +20,6 @@
     
     function Err() {
         this.console = NULL;
-        this.userAgent = w.navigator.userAgent;
         this.init();
     }
 
@@ -69,7 +68,7 @@
             name = error.name;
 
         return JSON.stringify({
-            token: '5adb34e9ffb8cd25f4e4910b',
+            token: '5adc4beb669f5704fc619f33',
             stack: stack,
             name: name,
             message: message,
@@ -77,8 +76,7 @@
             lineNo: lineNo,
             colunmNo: colunmNo,
             // href 可变
-            href: w.location.href,
-            userAgent: self.userAgent
+            location: w.location.href
         })
     }
 
@@ -90,23 +88,6 @@
         xhr.send(data);
     }
 
-    Err.prototype.uuid = function () {
-        var s = [];
-        var hexDigits = "0123456789abcdef";
-        for (var i = 0; i < 36; i++) {
-            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-        }
-        s[14] = "4"; 
-        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
-        s[8] = s[13] = s[18] = s[23] = "-";
-        var uuid = s.join("");
-        return uuid;
-    }
-
-    Err.prototype.userAgent = function() {
-        return w.navigator.userAgent
-    }
-
     function sendByImage() {
         var image = new Image();
         image.src = href  
@@ -114,6 +95,3 @@
 
     new Err()
 }()
-
-alert(a)
-

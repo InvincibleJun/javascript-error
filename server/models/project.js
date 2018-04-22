@@ -5,6 +5,10 @@ module.exports = {
         type: String,
         unique: true
       },
+      code: {
+        type: String,
+        unique: true,
+      },
       host: {
         type: Array,
         default: []

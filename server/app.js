@@ -33,8 +33,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/', errorRouter);
-app.use('/project', projectRouter);
+// app.use('/api', errorRouter);
+app.use('/api/project', projectRouter);
+app.use('/api/error', errorRouter);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', indexRouter);

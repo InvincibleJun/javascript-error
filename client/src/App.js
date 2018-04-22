@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Layout from './views/Layout';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class App extends Component {
   render() {
-    // throw new Error('errore')
+    // throw new Error('324')
     return (
-      <div className="App">
-        <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <h1>JS报错查询</h1>
-        </header>
-      </div>
+      <Router>
+        <div className="App">
+          <Layout />
+        </div>
+      </Router>
     );
   }
 }

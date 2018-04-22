@@ -1,29 +1,49 @@
-const UA = require('ua-device');
-const request = require('request');
-
+const UA = require("ua-device");
+const request = require("request");
+const uuid = require("uuid/v1");
 module.exports = {
-    receiveErorr
+  receive,
+  search
+};
+
+async function search(req, res, next) {
+  const { _id, page = 1, pageSize = 12 } = req.query;
+  const { code } = await mdb.project.findById(_id);
+  const data = await mdb[code].find({})
+  res.send({ code:200, data });
 }
 
-async function receiveErorr(req, res, next) {
-    const { ip, body } = req
-    const { userAgent } = body
-    const data = Object.assign(body, UA(userAgent))
-    await resolveIp(ip)
-    // console.log(data);
-    // const { token, error, href, name, origin, stack, lineNo, message, userAgent } = req.body;
-    // const { os, brower, device, engine } = UA(userAgent);
-    // const { name } = await mdb.project.findById(token);
-    // mdb[name].create(data)
-    res.send(data)
+async function receive(req, res, next) {
+  const userAgent = req.headers["user-agent"];
+  const { ip, body, baseUrl } = req;
+  // IP处理
+  const position = await resolveIp(ip);
+  const data = Object.assign(body, {
+    uuid: uuid(),
+    position,
+    ...UA(userAgent)
+  });
+  // 取得collection
+  let code;
+  try {
+    code = (await mdb.project.findById(data.token)).code;
+  } catch (e) {
+    res.send(500);
+  }
+  await mdb[code].create(data);
+  res.send(200);
 }
 
-function resolveIp(ip){
-    if (!ip) return
-    return new Promise((resolve, reject) => {
-        request(`http://ip.taobao.com/service/getIpInfo.php?ip=${ip}`, function(err, res, body) {
-            err && reject(err);
-            resolve(body);
-        })
-    })
+function resolveIp(ip) {
+  if (!ip) return {};
+  return new Promise((resolve, reject) => {
+    request(`http://ip.taobao.com/service/getIpInfo.php?ip=${ip}`, function(
+      err,
+      res,
+      body
+    ) {
+      err && reject(err);
+      resolve(body);
+    });
+  });
 }

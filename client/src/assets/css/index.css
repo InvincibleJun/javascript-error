@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.ant-layout-header{
+  z-index: 1;
+}
+
+
+.ant-table td { white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+
+.project-card-line span {
+  text-align: right;
+  display: inline-block;
+  width: 100px;
+  vertical-align: top;
+}
+
+.error-stack-line {
+  position: relative;
+}
+
+.error-stack-line div{
+  text-overflow: ellipsis;
+  width: 500px;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.error-stack-line button {
+  position: absolute;
+  left: 520px;
+  top: 0;
+}
+/* 
+#components-layout-demo-fixed .logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255,255,255,.2);  
+  margin: 16px 24px 16px 0;
+  float: left;
+} */
