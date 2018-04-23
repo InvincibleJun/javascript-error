@@ -21,9 +21,10 @@ const Cover = styled.div`
 `;
 
 const Main = styled.div`
-  width: 600px;
+  width: 800px;
   height: 100vh;
   position: absolute;
+  padding: 20px;
   top: 0;
   right: 0;
   background-color: #fafafa;
@@ -36,7 +37,7 @@ const Main = styled.div`
 
 const scrollRightShow = keyframes`
   from {
-    margin-right: -600px;
+    margin-right: -800px;
   }
 
   to {
@@ -50,7 +51,7 @@ const scrollRightHide = keyframes`
   }
 
   to {
-    margin-right: -600px;;
+    margin-right: -800px;;
   }
 `;
 
@@ -83,34 +84,19 @@ export default class RightModel extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.show) {
-			this.setState({ show: true });
-			this.stopBodyScroll(true);			
-    }
-  }
-
-  stopBodyScroll(isFixed) {
-    const { body, top } = this.state;
-    if (isFixed) {
-      this.setState({ top: window.scrollY });
-      body.style.position = "fixed";
-      body.style.top = -top + "px";
-    } else {
-      body.style.position = "";
-      body.style.top = "";
-
-      window.scrollTo(0, top); // 回到原先的top
+      this.setState({ show: true });
     }
   }
 
   close = () => {
+    let closed = 0;
+    this.cover.addEventListener("webkitAnimationEnd", () => {
+      ++closed === 2 && this.props.onClose();
+    });
+    this.main.addEventListener("webkitAnimationEnd", () => {
+      ++closed === 2 && this.props.onClose();
+    });
     this.setState({ show: false });
-    // this.refs.main.addEventListener('webkitAnimationEnd', function() {
-    // debugger
-    // })
-    setTimeout(() => {
-			this.stopBodyScroll(false)
-      this.props.onClose();
-    }, 300);
   };
 
   render() {
@@ -118,8 +104,15 @@ export default class RightModel extends Component {
     const showProp = this.props.show;
     return (
       <Container show={showProp}>
-        <Cover show={show} ref="cover" onClick={this.close} />
-        <Main show={show} ref="main" />
+        <Cover
+          show={show}
+          ref="cover"
+          innerRef={dom => (this.cover = dom)}
+          onClick={this.close}
+        />
+        <Main show={show} innerRef={dom => (this.main = dom)}>
+          {this.props.children}
+        </Main>
       </Container>
     );
   }

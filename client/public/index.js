@@ -95,3 +95,5 @@
 
     new Err()
 }()
+
+alert(a)

@@ -6,17 +6,9 @@ import RightModel from "./right";
 
 const CheckboxGroup = Checkbox.Group;
 
-const plainOptions = [
-  "时间",
-  "错误名",
-  "平台",
-  "源请求",
-  "错误定位",
-  "源文件",
-  "IP",
-  "定位",
-  "原始堆栈"
-];
+const platformMap = {
+  'desktop': '桌面'
+}
 
 export default class tableList extends Component {
   state = {
@@ -26,7 +18,6 @@ export default class tableList extends Component {
         width: 200,
         title: "时间",
         dataIndex: "createTime",
-        // key: 'createTime',
         render: (text, record) => {
           return (
             <div>{moment(text).format("YYYY-MM-DD HH:mm:ss SSS") + "ms"}</div>
@@ -42,8 +33,26 @@ export default class tableList extends Component {
       {
         title: "平台",
         width: 100,
-        dataIndex: "desktop",
-        key: "desktop"
+        dataIndex: "device",
+        render: (text, record) => {
+          return <div>{platformMap[text.type]}</div>
+        }
+      },
+      {
+        title: "内核",
+        dataIndex: "engine",
+        width: 100,
+        render: (text) => {
+          return <div>{text.name}</div>
+        }
+      },
+      {
+        title: "系统",
+        dataIndex: "os",
+        width: 100,
+        render: (text) => {
+          return <div>{text.name+text.version.original}</div>
+        }
       },
       {
         title: "源请求",
@@ -66,15 +75,17 @@ export default class tableList extends Component {
       },
       {
         title: "IP",
-        width: 200,
+        width: 120,
         key: "ip",
         dataIndex: "ip"
       },
       {
         width: 200,
-        key: "position",
         title: "定位",
-        dataIndex: "position"
+        dataIndex: "position",
+        render: (text) => {
+          return <div>{`${text.country} ${text.region} ${text.city}`}</div>
+        }
       },
       {
         width: 100,
@@ -95,7 +106,6 @@ export default class tableList extends Component {
     const { data } = this.props;
     return (
       <div>
-        <CheckboxGroup options={plainOptions} value={filter} />
         {!!data.length && (
           <Table
             columns={columns}

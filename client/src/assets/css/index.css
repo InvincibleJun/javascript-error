@@ -8,10 +8,22 @@ body {
   z-index: 1;
 }
 
+.layout-content-box{
+  height: calc(100vh - 64px);
+  margin-top: 64px;
+  padding: 50px 50px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.layout-content-box>div{
+  height: calc(100vh - 164px);
+  
+}
 
 .ant-table td { white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 
-.project-card-line span {
+.project-card-line > span {
   text-align: right;
   display: inline-block;
   width: 100px;

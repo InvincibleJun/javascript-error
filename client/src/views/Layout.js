@@ -32,7 +32,7 @@ export default class Container extends Component{
           </Menu.Item>
         </Menu>
       </Header>
-      <Content style={{ padding: '50px 50px 0', marginTop: 64, }}>
+      <Content className="layout-content-box">
         {/* <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
           <Breadcrumb.Item>List</Breadcrumb.Item>
@@ -46,9 +46,6 @@ export default class Container extends Component{
           {/* <Route path="/topics" component={Topics} /> */}
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>
-        javascript-error
-      </Footer>
     </Layout>
     )
   }

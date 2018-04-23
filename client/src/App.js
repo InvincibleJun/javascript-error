@@ -6,12 +6,9 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class App extends Component {
   render() {
-    // throw new Error('324')
     return (
       <Router>
-        <div className="App">
-          <Layout />
-        </div>
+        <Layout className="App"/>
       </Router>
     );
   }

@@ -1,40 +1,49 @@
 import React, { Component } from "react";
 import { get } from "../services/history";
 import Table from "../components/table";
-import { Modal } from "antd";
+import RightModal from "../components/right";
+import ErrorDetail from "./error-detail";
+import { Pagination } from "antd";
 
 export default class History extends Component {
   state = {
-    data: [],
+    list: [],
     visible: false,
-    modalData: null
+    modalData: null,
+    size: 18,
+    total: 0,
+    page: 1
   };
 
   componentWillMount() {
-    const { match } = this.props;
-    get({ _id: match.params.id }).then(data => {
-      this.setState({ data });
+    this.getList();
+  }
+
+  getList(page) {
+    const { match } = this.props;    
+    get({ _id: match.params.id, page }).then(({ list, page, size, total }) => {
+      this.setState({ list, page, size, total });
     });
   }
 
   open = line => {
-      this.setState({visible: true, modalData: line});
+    this.setState({ visible: true, modalData: line });
   };
 
+  pageChange = page => {
+    this.getList(page)
+  }
+
   render() {
-    const { data, visible, modalData } = this.state;
+    const { list, page, size, total, visible, modalData } = this.state;
     return (
       <div>
-        <Modal
-          title="20px to Top"
-          style={{ top: 20 }}
-          width={800}
-          visible={visible}
-          onCancel={() => this.setModal1Visible(false)}
-        >
-          {modalData && <p>{modalData.stack}</p>}
-        </Modal>
-        <Table data={data} open={this.open}/>
+        <RightModal show={visible} data={modalData} onClose={() => {this.setState({visible: false})}}>
+          { visible && <ErrorDetail data={modalData}/> }
+        </RightModal>
+        <Table data={list} open={this.open} />
+        <br />
+        <Pagination onChange={this.pageChange} defaultCurrent={page} total={total} defaultPageSize={size}/>
       </div>
     );
   }
