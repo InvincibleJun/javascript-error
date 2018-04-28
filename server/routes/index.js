@@ -1,9 +1,17 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express')
+const path = require('path')
+const fs = require('fs')
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+function createRouter(versionDir) {
+  let router = express.Router()
+  fs.readdirSync(versionDir).forEach(function(file) {
+    require(path.join(versionDir, file))(router)
+  })
+  return router
+}
 
-module.exports = router;
+const router = express.Router()
+const v1 = createRouter(path.join(__dirname, 'api/v1'))
+
+router.use('/api/v1', v1)
+module.exports = router

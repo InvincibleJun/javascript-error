@@ -1,14 +1,14 @@
 module.exports = {
   uuid: {
     type: String,
-    unique: true,
+    unique: true
   },
   name: {
-    type: String,
+    type: String
   },
   createTime: {
-    type: Date,  
-    default: Date.now()
+    type: Date,
+    default: Date.now
   },
   lineNo: {
     type: Number

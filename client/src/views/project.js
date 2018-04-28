@@ -1,22 +1,23 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { projects } from "../services/project";
-import { Card, Button } from "antd";
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { projects } from '../services/project'
+import { Card, Tag } from 'antd'
 
 export default class Project extends Component {
   state = {
     data: []
-  };
+  }
+
   componentWillMount() {
     projects().then(data => {
       this.setState({
         data
-      });
-    });
-    // throw new Error('error le')
+      })
+    })
   }
+
   render() {
-    const { data } = this.state;
+    const { data } = this.state
     return (
       <div>
         {data.map(project => (
@@ -24,23 +25,25 @@ export default class Project extends Component {
             key={project._id}
             title={project.name}
             extra={<Link to={`/history/${project._id}`}>查看日志</Link>}
-            style={{ width: 300, display: 'inline-block', margin: 10 }}
+            style={{ width: 350, display: 'inline-block', margin: 10 }}
           >
-            <p className="project-card-line">
-              <span>监控hosts:</span>
-            </p>
-            <p className="project-card-line">
-              <span>创建人:</span>
-            </p>
-            <p className="project-card-line">
-              <span>创建人:</span>
-            </p>
-            <p className="project-card-line">
-              <Button size="small">复制token</Button>
-            </p>
+            <div className="project-card-line">
+              <span>hosts:</span>
+              {project.host.map(h => <Tag key={h}>{h}</Tag>)}
+            </div>
+            <div className="project-card-line">
+              <span>创建人:</span> {project.creator}
+            </div>
+            <div className="project-card-line">
+              <span>用户:</span>
+              {project.users.map(u => <Tag key={u}>{u}</Tag>)}
+            </div>
+            <div className="project-card-line">
+              <span>token:</span> {project._id}
+            </div>
           </Card>
         ))}
       </div>
-    );
+    )
   }
 }

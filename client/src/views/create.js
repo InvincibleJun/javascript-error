@@ -1,71 +1,45 @@
-import React, { Component } from "react";
-import {
-  Form,
-  Input,
-  Tooltip,
-  Icon,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete
-} from "antd";
+import React, { Component } from 'react'
+import { Form, Input, Select, Button } from 'antd'
 
-import { create } from "../services/project";
-const FormItem = Form.Item;
-const Option = Select.Option;
-const AutoCompleteOption = AutoComplete.Option;
+import { create } from '../services/project'
+const FormItem = Form.Item
 
-class RegistrationForm extends React.Component {
+class RegistrationForm extends Component {
   state = {
     confirmDirty: false,
     autoCompleteResult: []
-  };
+  }
   handleSubmit = e => {
-    e.preventDefault();
+    e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         create(values).then(res => {
-          console.log(res);
-        });
+          console.log(res)
+        })
       }
-    });
-  };
+    })
+  }
   handleConfirmBlur = e => {
-    const value = e.target.value;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  };
+    const value = e.target.value
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value })
+  }
   compareToFirstPassword = (rule, value, callback) => {
-    const form = this.props.form;
-    if (value && value !== form.getFieldValue("password")) {
-      callback("Two passwords that you enter is inconsistent!");
+    const form = this.props.form
+    if (value && value !== form.getFieldValue('password')) {
+      callback('Two passwords that you enter is inconsistent!')
     } else {
-      callback();
+      callback()
     }
-  };
+  }
   validateToNextPassword = (rule, value, callback) => {
-    const form = this.props.form;
+    const form = this.props.form
     if (value && this.state.confirmDirty) {
-      form.validateFields(["confirm"], { force: true });
+      form.validateFields(['confirm'], { force: true })
     }
-    callback();
-  };
-  handleWebsiteChange = value => {
-    let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = [".com", ".org", ".net"].map(
-        domain => `${value}${domain}`
-      );
-    }
-    this.setState({ autoCompleteResult });
-  };
+    callback()
+  }
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
+    const { getFieldDecorator } = this.props.form
 
     const formItemLayout = {
       labelCol: {
@@ -76,7 +50,7 @@ class RegistrationForm extends React.Component {
         xs: { span: 24 },
         sm: { span: 16 }
       }
-    };
+    }
     const tailFormItemLayout = {
       wrapperCol: {
         xs: {
@@ -88,58 +62,53 @@ class RegistrationForm extends React.Component {
           offset: 8
         }
       }
-    };
-
-    const websiteOptions = autoCompleteResult.map(website => (
-      <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-    ));
-
+    }
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="名称">
-          {getFieldDecorator("name", {
+          {getFieldDecorator('name', {
             rules: [
               {
                 required: true,
-                message: "请输入监控名称"
+                message: '请输入监控名称'
               }
             ]
           })(<Input />)}
         </FormItem>
         <FormItem {...formItemLayout} label="监控代号">
-          {getFieldDecorator("code", {
+          {getFieldDecorator('code', {
             rules: [
               {
                 required: true,
-                message: "请输入监控代号"
+                message: '请输入监控代号'
               }
             ]
-          })(<Input type="text"/>)}
+          })(<Input type="text" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="host">
-          {getFieldDecorator("host", {
+          {getFieldDecorator('host', {
             rules: [
               {
                 required: true,
-                message: "清输入监控host"
+                message: '请输入监控host'
               }
             ]
           })(<Select mode="tags" notFoundContent="请输入host" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="创建人">
-          {getFieldDecorator("creator", {
+          {getFieldDecorator('creator', {
             rules: [
               {
                 required: true,
-                message: "请输入创建人"
+                message: '请输入创建人'
               }
             ]
-          })(<Input type="text" /> )}
+          })(<Input type="text" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="可查看用户">
-          {getFieldDecorator("users", {
-            rules: [{ required: true, message: "请输入可查看用户" }]
-          })(<Select mode="tags" notFoundContent="请输入host"/>)}
+          {getFieldDecorator('users', {
+            rules: [{ required: true, message: '请输入可查看用户' }]
+          })(<Select mode="tags" notFoundContent="请输入host" />)}
         </FormItem>
         <FormItem {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
@@ -148,8 +117,8 @@ class RegistrationForm extends React.Component {
           <Button htmlType="submit">取消</Button>
         </FormItem>
       </Form>
-    );
+    )
   }
 }
 
-export default Form.create()(RegistrationForm);
+export default Form.create()(RegistrationForm)

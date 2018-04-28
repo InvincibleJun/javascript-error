@@ -4,11 +4,11 @@ body {
   font-family: sans-serif;
 }
 
-.ant-layout-header{
+.ant-layout-header {
   z-index: 1;
 }
 
-.layout-content-box{
+.layout-content-box {
   height: calc(100vh - 64px);
   margin-top: 64px;
   padding: 50px 50px 0;
@@ -16,17 +16,30 @@ body {
   overflow-y: auto;
 }
 
-.layout-content-box>div{
+.layout-content-box > div {
   height: calc(100vh - 164px);
-  
 }
 
-.ant-table td { white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+.error-detail-line {
+  margin-top: 20px;
+}
+
+.ant-table td {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.project-card-line {
+  line-height: 30px;
+}
 
 .project-card-line > span {
+  font-weight: bold;
+  margin-right: 10px;
   text-align: right;
   display: inline-block;
-  width: 100px;
+  width: 60px;
   vertical-align: top;
 }
 
@@ -34,7 +47,7 @@ body {
   position: relative;
 }
 
-.error-stack-line div{
+.error-stack-line div {
   text-overflow: ellipsis;
   width: 500px;
   white-space: nowrap;
