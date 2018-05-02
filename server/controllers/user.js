@@ -1,7 +1,8 @@
+const request = require('request')
+
 /**********************************
  * desc: 登陆相关控制器
  *********************************/
-const request = require('request')
 
 /**
  * githubd第三方登陆
@@ -29,22 +30,10 @@ async function login(req, res, next) {
           },
           async (err, response, body) => {
             if (!err) {
-              let data = JSON.parse(body)
+              const data = JSON.parse(body)
+              const { id, name } = data
               let result = await mdb.user.findOne({ id: data.id })
-              if (!result) {
-                await mdb.user.create(
-                  ({
-                    login,
-                    id,
-                    name,
-                    bio,
-                    company,
-                    avatar_url,
-                    email,
-                    html_url
-                  } = data)
-                )
-              }
+              !result && (await mdb.user.create(data))
               req.session.user = { id, name }
               res.redirect(req.session.backUrl)
             }
@@ -55,6 +44,30 @@ async function login(req, res, next) {
   )
 }
 
+/**
+ * 用户查询接口
+ * @param {*} req
+ * @param {string} req.query.key -查询key
+ * @param {*} res
+ * @param {*} next
+ */
+async function search(req, res, next) {
+  const { key } = req.query
+  if (!key) return res.send(200)
+  const data = await mdb.user.find({
+    $or: [
+      {
+        name: { $regex: `${key}`, $options: 'i' }
+      },
+      {
+        email: { $regex: `${key}`, $options: 'i' }
+      }
+    ]
+  })
+  res.send({ code: 200, data })
+}
+
 module.exports = {
-  login
+  login,
+  search
 }

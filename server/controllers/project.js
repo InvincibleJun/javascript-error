@@ -7,7 +7,8 @@ async function projects(req, res, next) {
 }
 
 async function create(req, res, next) {
-  const { name, host, creator, users, code } = req.body
+  const { name, host, users, code } = req.body
+  const creator = req.session.user.id
   const { _id } = await mdb.project.create({ name, host, creator, users, code })
   mdb._create(code, errorSchema)
   res.send({ code: 200, data: { _id } })

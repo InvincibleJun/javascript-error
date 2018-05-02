@@ -45,8 +45,7 @@ async function receive(req, res, next) {
     res.send(403)
   } else {
     // host检验
-    let { host } = project
-    if (host.find(h => h.indexOf(location) === -1)) {
+    if (project.host.find(h => h.indexOf(location) === -1)) {
       res.send(403)
     }
   }

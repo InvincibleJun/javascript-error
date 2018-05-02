@@ -1,14 +1,14 @@
-import request from '../utils/request';
+import request from '../utils/request'
 
 const api = {
-    create: '/project/create',
-    projects: '/project/get'
+  create: '/create',
+  projects: '/get'
 }
 
 export const create = body => {
-    return request(api.create, {method: 'POST', body})
+  return request(api.create, { method: 'POST', body })
 }
 
 export const projects = body => {
-    return request(api.projects, {method: 'GET'})
+  return request(api.projects, { method: 'GET' })
 }

@@ -1,3 +1,6 @@
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
 module.exports = {
   name: 'project',
   schema: {
@@ -14,12 +17,15 @@ module.exports = {
       default: []
     },
     creator: {
-      type: Object
+      type: Schema.Types.ObjectId,
+      ref: 'user'
     },
-    users: {
-      type: Array,
-      default: []
-    },
+    users: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+      }
+    ],
     createTime: {
       type: Date,
       default: Date.now()
