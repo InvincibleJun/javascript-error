@@ -1,0 +1,30 @@
+{
+  "name": "javascript-error",
+  "version": "1.0.0",
+  "description": "|-- client 页面\r |-- server 服务端\r |-- index.js 入口文件",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "pm2 start pm2-config.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InvincibleJun/javascript-error.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/InvincibleJun/javascript-error/issues"
+  },
+  "homepage": "https://github.com/InvincibleJun/javascript-error#readme",
+  "devDependencies": {
+    "koa": "^2.7.0",
+    "log4js": "^4.1.0",
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "koa-bodyparser": "^3.2.0",
+    "koa-static": "^5.0.0",
+    "pm2": "^3.4.1"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "js-error",
+  "script": "./app.js",
+  "cmd": "/",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
