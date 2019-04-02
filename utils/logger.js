@@ -16,7 +16,7 @@ log4js.configure({
   appenders: {
     out: {
       type: "dateFile",
-      filename: "logs/huazhi",
+      filename: "../logs/js-error",
       pattern: "yyyy-MM-dd-hh.log",
       alwaysIncludePattern: true,
       layout: { type: "json", separator: "" }

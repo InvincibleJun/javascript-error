@@ -1,2 +1,0 @@
-{"time":"2019-04-02T03:28:39.349Z","type":"LOG","uuid":"c834d770-f699-40fd-960a-b12adf796427","createTime":1554175719340,"path":"http://localhost:5000/","console":"hellow world,good morning","level":"INFO"}
-{"time":"2019-04-02T03:28:39.351Z","type":"ERROR","uuid":"cd1f9853-7616-4c9c-85e9-0b8d99c6f86b","createTime":1554175719342,"path":"http://localhost:5000/","console":"on error,Error: error","level":"INFO"}
